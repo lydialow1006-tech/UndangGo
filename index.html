@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UndangGo - 驾驶理论练习</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+  background: #f4f7fb;
+  color: #1f2937;
+}
+
+header {
+  background: #173b6c;
+  color: white;
+  padding: 22px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+header p {
+  margin: 8px 0 0;
+}
+
+.container {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.language {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.language button {
+  border: 1px solid #173b6c;
+  background: white;
+  color: #173b6c;
+  padding: 8px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.language button.active {
+  background: #173b6c;
+  color: white;
+}
+
+.progress {
+  color: #6b7280;
+  margin-bottom: 15px;
+}
+
+.question {
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  margin: 10px 0;
+  background: #f8fafc;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.option:hover {
+  border-color: #173b6c;
+}
+
+.option.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+}
+
+.option.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  display: none;
+  margin-top: 20px;
+  padding: 16px;
+  background: #fff8db;
+  border-radius: 12px;
+  line-height: 1.6;
+}
+
+.next {
+  display: none;
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border: 0;
+  border-radius: 12px;
+  background: #173b6c;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.result {
+  text-align: center;
+}
+
+.score {
+  font-size: 45px;
+  font-weight: bold;
+  color: #173b6c;
+  margin: 20px;
+}
+
+.restart {
+  padding: 14px 20px;
+  margin: 6px;
+  border: 0;
+  border-radius: 10px;
+  background: #173b6c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.retry {
+  background: #e58a00;
+}
+
+footer {
+  text-align: center;
+  color: #6b7280;
+  font-size: 13px;
+  margin: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🚦 UndangGo</h1>
+  <p id="subtitle">新学员驾驶理论练习</p>
+</header>
+
+<div class="container">
+  <div class="card">
+
+    <div class="language">
+      <button id="zhBtn" class="active" onclick="setLanguage('zh')">
+        中文
+      </button>
+
+      <button id="msBtn" onclick="setLanguage('ms')">
+        Bahasa Melayu
+      </button>
+    </div>
+
+    <div id="quiz"></div>
+
+  </div>
+</div>
+
+<footer>
+  UndangGo · 驾驶理论学习 / Latihan Teori Memandu
+</footer>
+
+<script>
+
+const questions = [
+
+{
+ zh: {
+  question: "当路口的交通信号灯转为红色时，驾驶人应该怎么做？",
+  options: [
+   "如果没有其他车辆，可以继续行驶",
+   "在停止线前停车，等绿灯后才继续行驶",
+   "按喇叭后继续行驶"
+  ],
+  explanation:
+  "红灯表示必须停车。驾驶人应在停止线前停车，即使路口没有其他车辆，也不能闯红灯。"
+ },
+
+ ms: {
+  question:
+  "Apabila lampu isyarat bertukar merah, apakah yang perlu dilakukan oleh pemandu?",
+  options: [
+   "Teruskan perjalanan jika tiada kenderaan lain",
+   "Berhenti sebelum garisan berhenti dan tunggu sehingga lampu hijau",
+   "Bunyikan hon dan teruskan perjalanan"
+  ],
+  explanation:
+  "Lampu merah bermaksud wajib berhenti. Pemandu perlu berhenti sebelum garisan berhenti dan hanya meneruskan perjalanan apabila dibenarkan."
+ },
+
+ answer: 1
+},
+
+{
+ zh: {
+  question:
+  "前方车辆行驶缓慢，道路中央有双白实线。驾驶人应该怎么做？",
+  options: [
+   "如果对面没有车辆，可以越线超车",
+   "保持在自己的车道，不越过双白实线超车",
+   "按喇叭后立即超车"
+  ],
+  explanation:
+  "双白实线表示驾驶人不可随意越线超车。应保持在自己的车道，并等待安全及合法的超车位置。"
+ }
