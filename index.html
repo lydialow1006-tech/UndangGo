@@ -236,10 +236,22 @@ const questions = [
    a
   answer: 1 
  }
-  
+  let currentQuestion = 0;
 function setLanguage(lang) {
   currentLang = lang;
   renderQuestion();
 }
+function renderQuestion() {
+    const quiz = document.getElementById("quiz");
+    const q = questions[currentQuestion][currentLang];
 
+    quiz.innerHTML = `
+        <h2>${q.question}</h2>
+        ${q.options.map((option, index) => `
+            <button onclick="checkAnswer(${index})">
+                ${String.fromCharCode(65 + index)}. ${option}
+            </button>
+        `).join("")}
+    `;
+}
   
