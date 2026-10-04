@@ -255,6 +255,21 @@ function renderQuestion() {
         `).join("")}
     `;
 }
+function checkAnswer(selectedIndex) {
+  const q = questions[currentQuestion][currentLang];
+  const buttons = document.querySelectorAll("#quiz button");
+  buttons.forEach(btn => btn.disabled = true);
+  if (selectedIndex === q.answer) {
+    buttons[selectedIndex].classList.add("correct");
+    alert(q.explanation);
+    } else {
+    buttons[selectedIndex].classList.add("wrong");
+    buttons[q.answer].classList.add("correct");
+    alert(q.explanation);
+    }
+  currentQuestion++;
+  renderQuestion();
+  }
   </script>
 </body>
 </html>
